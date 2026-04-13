@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClawFix 故障诊断助手</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-card">
+        <p class="eyebrow">ClawFix / OpenClaw-style MVP</p>
+        <h1>故障诊断助手</h1>
+        <p class="brand-copy">支持会话持续跟踪、结构化诊断、案例沉淀、知识文档导入与向量同步。</p>
+      </div>
+
+      <button id="new-session-btn" class="primary wide">新建会话</button>
+
+      <section class="sidebar-section">
+        <div class="section-header">
+          <h2>最近会话</h2>
+          <button id="refresh-sessions" class="ghost">刷新</button>
+        </div>
+        <ul id="sessions-list" class="sidebar-list"></ul>
+      </section>
+
+      <section class="sidebar-section">
+        <div class="section-header">
+          <h2>历史案例</h2>
+          <button id="refresh-cases" class="ghost">刷新</button>
+        </div>
+        <ul id="cases-list" class="sidebar-list compact"></ul>
+      </section>
+
+      <section class="sidebar-section">
+        <div class="section-header">
+          <h2>知识库</h2>
+          <button id="refresh-knowledge" class="ghost">刷新</button>
+        </div>
+        <ul id="knowledge-list" class="sidebar-list compact"></ul>
+      </section>
+    </aside>
+
+    <main class="chat-shell">
+      <header class="chat-header">
+        <div>
+          <p class="header-label">当前会话</p>
+          <h2 id="chat-title">新会话</h2>
+          <p id="chat-meta" class="header-meta">还没有消息，输入问题后会自动创建主会话。</p>
+        </div>
+        <div class="header-actions">
+          <span id="status-text" class="status-pill">空闲</span>
+          <button id="toggle-knowledge-btn" class="ghost">管理知识</button>
+          <button id="toggle-finalize-btn" class="ghost">沉淀案例</button>
+        </div>
+      </header>
+
+      <section id="messages" class="messages" aria-live="polite">
+        <div id="empty-chat" class="empty-chat">
+          <h3>开始一次分析</h3>
+          <p>贴入报错、日志或代码片段，助手会在当前会话内持续跟踪上下文并返回结构化诊断。</p>
+        </div>
+      </section>
+
+      <section id="finalize-panel" class="finalize-panel hidden">
+        <div class="section-header">
+          <h3>案例沉淀</h3>
+          <button id="finalize-btn" class="secondary">写入案例库</button>
+        </div>
+        <input id="case-title" type="text" placeholder="案例标题，可选">
+        <textarea id="final-root-cause" placeholder="最终根因"></textarea>
+        <textarea id="actual-fix" placeholder="实际修复方式"></textarea>
+      </section>
+
+      <section id="knowledge-panel" class="knowledge-panel hidden">
+        <div class="section-header">
+          <h3>知识库管理</h3>
+          <div class="panel-actions">
+            <button id="refresh-knowledge-panel" class="ghost">刷新列表</button>
+            <button id="knowledge-import-btn" class="secondary">导入知识文件</button>
+          </div>
+        </div>
+
+        <div class="upload-stack">
+          <label class="upload-button">
+            <span>选择知识文件</span>
+            <input id="knowledge-file-input" type="file" accept=".md,.txt" multiple>
+          </label>
+          <p class="upload-hint">支持 `.md`、`.txt`。选中文件后会整体写入 `workspace/knowledge/uploads/` 并同步到向量库。</p>
+          <ul id="knowledge-file-list" class="file-list"></ul>
+        </div>
+
+        <div class="knowledge-list-panel">
+          <div class="section-header">
+            <h4>已有知识文档</h4>
+            <span id="knowledge-count" class="panel-meta">0 篇</span>
+          </div>
+          <ul id="knowledge-manage-list" class="management-list"></ul>
+        </div>
+      </section>
+
+      <form id="composer-form" class="composer">
+        <textarea
+          id="question-input"
+          placeholder="输入故障描述、异常堆栈、代码片段或继续追问。Enter 发送，Shift + Enter 换行。"
+        ></textarea>
+
+        <div class="composer-toolbar">
+          <label class="upload-button">
+            <span>添加文本附件</span>
+            <input id="file-input" type="file" accept=".txt,.md,.log,.json,.yaml,.yml,.csv" multiple>
+          </label>
+          <div class="composer-actions">
+            <span id="session-key" class="session-key">未创建会话</span>
+            <button id="send-btn" type="submit" class="primary">发送</button>
+          </div>
+        </div>
+
+        <ul id="file-list" class="file-list"></ul>
+      </form>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

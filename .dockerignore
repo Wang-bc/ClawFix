@@ -1,0 +1,43 @@
+﻿# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Git and local tooling
+.git/
+.gitignore
+.idea/
+.vscode/
+.jbeval/
+
+# Local environment and databases
+.env
+.env.*
+identifier.sqlite
+*.sqlite
+*.sqlite3
+*.db
+
+# Runtime workspace data
+workspace/.delivery/
+workspace/.index/
+workspace/.qdrant/
+workspace/.sessions/
+workspace/cases/
+workspace/knowledge/uploads/
+workspace/memory/daily/
+
+# Personal or non-release materials
+docs/interview/
+智能助手功能列表.docx
